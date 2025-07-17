@@ -1,0 +1,30 @@
+## IoT Traffic Generation Tool
+
+**⚠️ This file is deprecated. Please see README.md for current documentation.**
+
+This tool was designed so that anyone can generate traffic they want from a bunch of separate IP addresses within their network.
+
+I specifically designed it so that I was able to spoof a bunch of random IoT appliances to show that our IoT Security Subscription worked.
+
+## Quick Start
+
+```bash
+# Setup (run once)
+sudo ./setup.sh
+
+# Start all IoT devices  
+./manage.sh start
+
+# Monitor device activity
+./manage.sh logs
+```
+
+For complete documentation, see README.md
+
+## Docker Commands
+
+Remove all running containers
+```bash
+docker rm -f $(docker ps -q)
+```
+

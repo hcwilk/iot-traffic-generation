@@ -1,0 +1,134 @@
+version: '3.8'
+
+services:
+  # Smart Camera (Hikvision-like)
+  smart-camera-01:
+    build: .
+    container_name: iot-camera-01
+    hostname: HIK-Camera-01
+    networks:
+      sec_net:
+        mac_address: "00:11:32:XX:XX:01"
+    environment:
+      - DEVICE_TYPE=camera
+      - DEVICE_MODEL=HIK-DS2CD2042WD
+      - DEVICE_MAC=00:11:32:XX:XX:01
+    volumes:
+      - ./scripts:/app/scripts
+    command: ["/app/scripts/camera_traffic.sh"]
+
+  # Smart Thermostat (Nest-like)
+  smart-thermostat-01:
+    build: .
+    container_name: iot-thermostat-01
+    hostname: Nest-Thermostat-01
+    networks:
+      sec_net:
+        mac_address: "18:B4:30:XX:XX:02"
+    environment:
+      - DEVICE_TYPE=thermostat
+      - DEVICE_MODEL=Nest-Learning-T3
+      - DEVICE_MAC=18:B4:30:XX:XX:02
+    volumes:
+      - ./scripts:/app/scripts
+    command: ["/app/scripts/thermostat_traffic.sh"]
+
+  # Smart Plug (TP-Link-like)
+  smart-plug-01:
+    build: .
+    container_name: iot-plug-01
+    hostname: TPLink-Plug-01
+    networks:
+      sec_net:
+        mac_address: "50:C7:BF:XX:XX:03"
+    environment:
+      - DEVICE_TYPE=smart_plug
+      - DEVICE_MODEL=TP-Link-HS100
+      - DEVICE_MAC=50:C7:BF:XX:XX:03
+    volumes:
+      - ./scripts:/app/scripts
+    command: ["/app/scripts/smart_plug_traffic.sh"]
+
+  # Smart TV (Samsung-like)
+  smart-tv-01:
+    build: .
+    container_name: iot-tv-01
+    hostname: Samsung-TV-01
+    networks:
+      sec_net:
+        mac_address: "04:5E:A4:XX:XX:04"
+    environment:
+      - DEVICE_TYPE=smart_tv
+      - DEVICE_MODEL=Samsung-UN55MU8000
+      - DEVICE_MAC=04:5E:A4:XX:XX:04
+    volumes:
+      - ./scripts:/app/scripts
+    command: ["/app/scripts/smart_tv_traffic.sh"]
+
+  # Smart Doorbell (Ring-like)
+  smart-doorbell-01:
+    build: .
+    container_name: iot-doorbell-01
+    hostname: Ring-Doorbell-01
+    networks:
+      sec_net:
+        mac_address: "B0:7F:B9:XX:XX:05"
+    environment:
+      - DEVICE_TYPE=doorbell
+      - DEVICE_MODEL=Ring-Video-Doorbell-Pro
+      - DEVICE_MAC=B0:7F:B9:XX:XX:05
+    volumes:
+      - ./scripts:/app/scripts
+    command: ["/app/scripts/doorbell_traffic.sh"]
+
+  # Smart Light (Philips Hue-like)
+  smart-light-01:
+    build: .
+    container_name: iot-light-01
+    hostname: Hue-Light-01
+    networks:
+      sec_net:
+        mac_address: "00:17:88:XX:XX:06"
+    environment:
+      - DEVICE_TYPE=smart_light
+      - DEVICE_MODEL=Philips-Hue-A19
+      - DEVICE_MAC=00:17:88:XX:XX:06
+    volumes:
+      - ./scripts:/app/scripts
+    command: ["/app/scripts/smart_light_traffic.sh"]
+
+  # Smart Speaker (Amazon Echo-like)
+  smart-speaker-01:
+    build: .
+    container_name: iot-speaker-01
+    hostname: Echo-Dot-01
+    networks:
+      sec_net:
+        mac_address: "68:37:E9:XX:XX:07"
+    environment:
+      - DEVICE_TYPE=smart_speaker
+      - DEVICE_MODEL=Amazon-Echo-Dot-3rd
+      - DEVICE_MAC=68:37:E9:XX:XX:07
+    volumes:
+      - ./scripts:/app/scripts
+    command: ["/app/scripts/smart_speaker_traffic.sh"]
+
+  # Smart Lock (August-like)
+  smart-lock-01:
+    build: .
+    container_name: iot-lock-01
+    hostname: August-Lock-01
+    networks:
+      sec_net:
+        mac_address: "D8:F1:5B:XX:XX:08"
+    environment:
+      - DEVICE_TYPE=smart_lock
+      - DEVICE_MODEL=August-Smart-Lock-Pro
+      - DEVICE_MAC=D8:F1:5B:XX:XX:08
+    volumes:
+      - ./scripts:/app/scripts
+    command: ["/app/scripts/smart_lock_traffic.sh"]
+
+networks:
+  sec_net:
+    external: true 
