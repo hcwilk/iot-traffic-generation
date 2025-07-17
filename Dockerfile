@@ -1,19 +1,23 @@
-# Use a small base image
-FROM alpine:latest
+# Use Ubuntu base image for better networking tools support
+FROM ubuntu:22.04
 
 # Install necessary tools for traffic generation and network simulation
-RUN apk update && apk add --no-cache \
+RUN apt-get update && apt-get install -y \
     nmap \
     curl \
     wget \
     tcpdump \
     netcat-openbsd \
-    bind-tools \
+    dnsutils \
     iperf3 \
     hping3 \
     bash \
     iproute2 \
-    net-tools
+    net-tools \
+    iputils-ping \
+    bc \
+    openssl \
+    && rm -rf /var/lib/apt/lists/*
 
 # Create app directory
 WORKDIR /app

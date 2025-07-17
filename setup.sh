@@ -22,8 +22,15 @@ if ! command -v docker &> /dev/null; then
 fi
 
 # Check for Docker Compose
-if ! command -v docker-compose &> /dev/null; then
-    echo "Error: Docker Compose is not installed. Please install Docker Compose first."
+if ! command -v docker &> /dev/null; then
+    echo "Error: Docker is not installed. Please install Docker first."
+    echo "Visit: https://docs.docker.com/get-docker/"
+    exit 1
+fi
+
+# Check if docker compose works
+if ! docker compose version &> /dev/null; then
+    echo "Error: Docker Compose is not available. Please install Docker Compose first."
     echo "Visit: https://docs.docker.com/compose/install/"
     exit 1
 fi
@@ -109,7 +116,7 @@ fi
 echo ""
 echo "Updating Docker Compose file with generated MAC addresses..."
 
-# Read MAC addresses and update docker-compose.yml
+# Read MAC addresses and update docker compose.yml
 while IFS=: read -r device mac_part1 mac_part2 mac_part3 mac_part4 mac_part5 mac_part6 manufacturer; do
     if [[ $device =~ ^[[:space:]]*# ]] || [[ -z $device ]]; then
         continue  # Skip comments and empty lines
@@ -117,8 +124,26 @@ while IFS=: read -r device mac_part1 mac_part2 mac_part3 mac_part4 mac_part5 mac
     
     full_mac="${mac_part1}:${mac_part2}:${mac_part3}:${mac_part4}:${mac_part5}:${mac_part6}"
     
-    # Update docker-compose.yml with actual MAC
-    sed -i "s/mac_address: \".*XX:XX:[0-9][0-9]\".*# ${device}/mac_address: \"${full_mac}\"/g" docker-compose.yml 2>/dev/null || true
+    # Map device names to their service names in docker-compose.yml
+    case $device in
+        "smart-camera-01") service_name="smart-camera-01" ;;
+        "smart-thermostat-01") service_name="smart-thermostat-01" ;;
+        "smart-plug-01") service_name="smart-plug-01" ;;
+        "smart-tv-01") service_name="smart-tv-01" ;;
+        "smart-doorbell-01") service_name="smart-doorbell-01" ;;
+        "smart-light-01") service_name="smart-light-01" ;;
+        "smart-speaker-01") service_name="smart-speaker-01" ;;
+        "smart-lock-01") service_name="smart-lock-01" ;;
+        *) continue ;;
+    esac
+    
+    echo "Updating ${service_name} with MAC: ${full_mac}"
+    
+    # Update docker compose.yml with actual MAC address in networks section
+    sed -i "/${service_name}:/,/command:/ s/mac_address: \".*XX:XX:[0-9][0-9]*\"/mac_address: \"${full_mac}\"/g" "docker-compose.yml"
+    
+    # Update DEVICE_MAC environment variable
+    sed -i "/${service_name}:/,/command:/ s/DEVICE_MAC=.*XX:XX:[0-9][0-9]*/DEVICE_MAC=${full_mac}/g" "docker-compose.yml"
 done < $MAC_FILE
 
 echo "✓ Docker Compose file updated with unique MAC addresses"

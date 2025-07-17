@@ -8,11 +8,11 @@ services:
     hostname: HIK-Camera-01
     networks:
       sec_net:
-        mac_address: "00:11:32:XX:XX:01"
+        mac_address: "00:11:32:db:87:8f"
     environment:
       - DEVICE_TYPE=camera
       - DEVICE_MODEL=HIK-DS2CD2042WD
-      - DEVICE_MAC=00:11:32:XX:XX:01
+      - DEVICE_MAC=00:11:32:db:87:8f
     volumes:
       - ./scripts:/app/scripts
     command: ["/app/scripts/camera_traffic.sh"]
@@ -24,11 +24,11 @@ services:
     hostname: Nest-Thermostat-01
     networks:
       sec_net:
-        mac_address: "18:B4:30:XX:XX:02"
+        mac_address: "18:B4:30:a3:2a:ff"
     environment:
       - DEVICE_TYPE=thermostat
       - DEVICE_MODEL=Nest-Learning-T3
-      - DEVICE_MAC=18:B4:30:XX:XX:02
+      - DEVICE_MAC=18:B4:30:a3:2a:ff
     volumes:
       - ./scripts:/app/scripts
     command: ["/app/scripts/thermostat_traffic.sh"]
@@ -40,11 +40,11 @@ services:
     hostname: TPLink-Plug-01
     networks:
       sec_net:
-        mac_address: "50:C7:BF:XX:XX:03"
+        mac_address: "50:C7:BF:2a:36:09"
     environment:
       - DEVICE_TYPE=smart_plug
       - DEVICE_MODEL=TP-Link-HS100
-      - DEVICE_MAC=50:C7:BF:XX:XX:03
+      - DEVICE_MAC=50:C7:BF:2a:36:09
     volumes:
       - ./scripts:/app/scripts
     command: ["/app/scripts/smart_plug_traffic.sh"]
@@ -56,11 +56,11 @@ services:
     hostname: Samsung-TV-01
     networks:
       sec_net:
-        mac_address: "04:5E:A4:XX:XX:04"
+        mac_address: "04:5E:A4:68:7b:84"
     environment:
       - DEVICE_TYPE=smart_tv
       - DEVICE_MODEL=Samsung-UN55MU8000
-      - DEVICE_MAC=04:5E:A4:XX:XX:04
+      - DEVICE_MAC=04:5E:A4:68:7b:84
     volumes:
       - ./scripts:/app/scripts
     command: ["/app/scripts/smart_tv_traffic.sh"]
@@ -72,11 +72,11 @@ services:
     hostname: Ring-Doorbell-01
     networks:
       sec_net:
-        mac_address: "B0:7F:B9:XX:XX:05"
+        mac_address: "B0:7F:B9:63:a3:50"
     environment:
       - DEVICE_TYPE=doorbell
       - DEVICE_MODEL=Ring-Video-Doorbell-Pro
-      - DEVICE_MAC=B0:7F:B9:XX:XX:05
+      - DEVICE_MAC=B0:7F:B9:63:a3:50
     volumes:
       - ./scripts:/app/scripts
     command: ["/app/scripts/doorbell_traffic.sh"]
@@ -88,11 +88,11 @@ services:
     hostname: Hue-Light-01
     networks:
       sec_net:
-        mac_address: "00:17:88:XX:XX:06"
+        mac_address: "00:17:88:6e:6c:cc"
     environment:
       - DEVICE_TYPE=smart_light
       - DEVICE_MODEL=Philips-Hue-A19
-      - DEVICE_MAC=00:17:88:XX:XX:06
+      - DEVICE_MAC=00:17:88:6e:6c:cc
     volumes:
       - ./scripts:/app/scripts
     command: ["/app/scripts/smart_light_traffic.sh"]
@@ -104,11 +104,11 @@ services:
     hostname: Echo-Dot-01
     networks:
       sec_net:
-        mac_address: "68:37:E9:XX:XX:07"
+        mac_address: "68:37:E9:ad:1d:a0"
     environment:
       - DEVICE_TYPE=smart_speaker
       - DEVICE_MODEL=Amazon-Echo-Dot-3rd
-      - DEVICE_MAC=68:37:E9:XX:XX:07
+      - DEVICE_MAC=68:37:E9:ad:1d:a0
     volumes:
       - ./scripts:/app/scripts
     command: ["/app/scripts/smart_speaker_traffic.sh"]
@@ -120,11 +120,11 @@ services:
     hostname: August-Lock-01
     networks:
       sec_net:
-        mac_address: "D8:F1:5B:XX:XX:08"
+        mac_address: "D8:F1:5B:bd:59:0e"
     environment:
       - DEVICE_TYPE=smart_lock
       - DEVICE_MODEL=August-Smart-Lock-Pro
-      - DEVICE_MAC=D8:F1:5B:XX:XX:08
+      - DEVICE_MAC=D8:F1:5B:bd:59:0e
     volumes:
       - ./scripts:/app/scripts
     command: ["/app/scripts/smart_lock_traffic.sh"]

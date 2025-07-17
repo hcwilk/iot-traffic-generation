@@ -139,7 +139,7 @@ sudo ./setup.sh
 
 #### Custom Device Count
 
-Edit `docker-compose.yml` to add more instances:
+Edit `docker compose.yml` to add more instances:
 
 ```yaml
 smart-camera-02:
@@ -323,7 +323,7 @@ Consider isolating IoT traffic:
 To add new IoT device types:
 
 1. Create a new traffic generation script in `scripts/`
-2. Add the device to `docker-compose.yml`
+2. Add the device to `docker compose.yml`
 3. Add appropriate MAC address OUI to `setup.sh`
 4. Update documentation
 

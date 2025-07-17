@@ -1,0 +1,21 @@
+# Generated MAC addresses file
+device_macs.txt
+
+# Docker logs and temporary files
+*.log
+.docker/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary files
+tmp/
+temp/ 

@@ -4,7 +4,7 @@
 
 set -e
 
-COMPOSE_FILE="docker-compose.yml"
+COMPOSE_FILE="docker compose.yml"
 PROJECT_NAME="iot-traffic-gen"
 
 # Color codes for output
@@ -58,7 +58,7 @@ start_devices() {
     check_setup
     
     print_status "Starting all IoT devices..."
-    docker-compose -p $PROJECT_NAME up -d
+    docker compose -p $PROJECT_NAME up -d
     
     if [ $? -eq 0 ]; then
         print_status "All devices started successfully!"
@@ -75,7 +75,7 @@ stop_devices() {
     print_header "Stopping IoT Traffic Generator"
     
     print_status "Stopping all IoT devices..."
-    docker-compose -p $PROJECT_NAME down
+    docker compose -p $PROJECT_NAME down
     
     if [ $? -eq 0 ]; then
         print_status "All devices stopped successfully!"
@@ -100,7 +100,7 @@ show_status() {
     
     echo ""
     echo "Container Status:"
-    docker-compose -p $PROJECT_NAME ps
+    docker compose -p $PROJECT_NAME ps
     
     echo ""
     echo "Network Information:"
@@ -108,7 +108,7 @@ show_status() {
     
     echo ""
     echo "Device Activity (last 10 lines per device):"
-    for container in $(docker-compose -p $PROJECT_NAME ps -q); do
+    for container in $(docker compose -p $PROJECT_NAME ps -q); do
         container_name=$(docker inspect --format='{{.Name}}' $container | cut -c2-)
         echo ""
         echo "--- $container_name ---"
@@ -122,15 +122,15 @@ show_logs() {
     
     if [ -z "$device" ]; then
         print_header "All Device Logs"
-        docker-compose -p $PROJECT_NAME logs -f
+        docker compose -p $PROJECT_NAME logs -f
     else
         print_header "Logs for $device"
-        if docker-compose -p $PROJECT_NAME ps | grep -q $device; then
-            docker-compose -p $PROJECT_NAME logs -f $device
+        if docker compose -p $PROJECT_NAME ps | grep -q $device; then
+            docker compose -p $PROJECT_NAME logs -f $device
         else
             print_error "Device '$device' not found"
             echo "Available devices:"
-            docker-compose -p $PROJECT_NAME ps --services
+            docker compose -p $PROJECT_NAME ps --services
             exit 1
         fi
     fi
@@ -152,10 +152,10 @@ scale_devices() {
     check_setup
     
     # Scale each service
-    services=$(docker-compose -p $PROJECT_NAME config --services)
+    services=$(docker compose -p $PROJECT_NAME config --services)
     for service in $services; do
         print_status "Scaling $service to $scale_factor instances..."
-        docker-compose -p $PROJECT_NAME up -d --scale $service=$scale_factor $service
+        docker compose -p $PROJECT_NAME up -d --scale $service=$scale_factor $service
     done
     
     print_status "Scaling complete!"
@@ -177,7 +177,7 @@ cleanup() {
     fi
     
     # Stop and remove containers
-    docker-compose -p $PROJECT_NAME down -v --remove-orphans
+    docker compose -p $PROJECT_NAME down -v --remove-orphans
     
     # Remove the Docker image
     docker rmi traffic-gen 2>/dev/null || true
@@ -208,7 +208,7 @@ add_devices() {
     
     # This would require dynamic Docker Compose generation
     # For now, show instruction for manual addition
-    print_warning "To add devices, edit docker-compose.yml and add new service definitions"
+    print_warning "To add devices, edit docker compose.yml and add new service definitions"
     print_warning "Copy an existing $device_type service and change the container name and MAC address"
     echo ""
     echo "Example MAC addresses for common IoT manufacturers:"
@@ -228,7 +228,7 @@ show_stats() {
     
     # Container resource usage
     echo "Resource Usage:"
-    docker stats --no-stream --format "table {{.Container}}\t{{.CPUPerc}}\t{{.MemUsage}}\t{{.NetIO}}" $(docker-compose -p $PROJECT_NAME ps -q) 2>/dev/null || echo "No running containers"
+    docker stats --no-stream --format "table {{.Container}}\t{{.CPUPerc}}\t{{.MemUsage}}\t{{.NetIO}}" $(docker compose -p $PROJECT_NAME ps -q) 2>/dev/null || echo "No running containers"
     
     echo ""
     echo "Network Traffic Summary (last 24 hours):"
@@ -237,7 +237,7 @@ show_stats() {
     
     echo ""
     echo "Device Type Distribution:"
-    docker-compose -p $PROJECT_NAME ps --format "table {{.Service}}\t{{.State}}" | tail -n +2 | sort | uniq -c
+    docker compose -p $PROJECT_NAME ps --format "table {{.Service}}\t{{.State}}" | tail -n +2 | sort | uniq -c
 }
 
 # Function to exec into a device container
@@ -247,12 +247,12 @@ exec_device() {
     if [ -z "$device" ]; then
         print_error "Please specify device name"
         echo "Available devices:"
-        docker-compose -p $PROJECT_NAME ps --services
+        docker compose -p $PROJECT_NAME ps --services
         exit 1
     fi
     
     print_status "Connecting to $device..."
-    docker-compose -p $PROJECT_NAME exec $device /bin/bash || docker-compose -p $PROJECT_NAME exec $device /bin/sh
+    docker compose -p $PROJECT_NAME exec $device /bin/bash || docker compose -p $PROJECT_NAME exec $device /bin/sh
 }
 
 # Function to show help
