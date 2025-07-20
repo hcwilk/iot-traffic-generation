@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  # Test User - Single user for testing User-ID mapping
+  user-test:
+    build: ../common
+    container_name: user-test
+    hostname: user-test-laptop
+    networks:
+      sec_net:
+        mac_address: "00:1B:44:11:3A:B7"
+    environment:
+      - USER_TYPE=test_user
+      - USER_ID=testuser
+      - USER_NAME=Test User
+      - DEPARTMENT=Testing
+      - FIREWALL_HOST=${FIREWALL_HOST:-192.168.1.1}
+      - FIREWALL_API_KEY=${FIREWALL_API_KEY}
+      - DEVICE_MAC=00:1B:44:11:3A:B7
+    volumes:
+      - ./scripts:/app/scripts
+    command: ["/app/scripts/test_user_traffic.sh"]
+
+networks:
+  sec_net:
+    external: true 

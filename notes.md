@@ -1,0 +1,1 @@
+./test-firewall-api.sh --firewall-host 192.168.0.3 --api-key LUFRPT03YnhCWHI4dGxuc1J4SnNDNWsrWUUrbW1PM1k9WXJnQWl3V0dtci9CdjR3bkJTcGU2Q3RJRFNxWVgvT21tVVRuL05VRTNnaFFzZ2JzVkhRRXFLM2RSQmxyMGowWA==

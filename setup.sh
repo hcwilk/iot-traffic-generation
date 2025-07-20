@@ -124,7 +124,7 @@ while IFS=: read -r device mac_part1 mac_part2 mac_part3 mac_part4 mac_part5 mac
     
     full_mac="${mac_part1}:${mac_part2}:${mac_part3}:${mac_part4}:${mac_part5}:${mac_part6}"
     
-    # Map device names to their service names in docker-compose.yml
+    # Map device names to their service names in docker compose.yml
     case $device in
         "smart-camera-01") service_name="smart-camera-01" ;;
         "smart-thermostat-01") service_name="smart-thermostat-01" ;;
@@ -140,10 +140,10 @@ while IFS=: read -r device mac_part1 mac_part2 mac_part3 mac_part4 mac_part5 mac
     echo "Updating ${service_name} with MAC: ${full_mac}"
     
     # Update docker compose.yml with actual MAC address in networks section
-    sed -i "/${service_name}:/,/command:/ s/mac_address: \".*XX:XX:[0-9][0-9]*\"/mac_address: \"${full_mac}\"/g" "docker-compose.yml"
+    sed -i "/${service_name}:/,/command:/ s/mac_address: \".*XX:XX:[0-9][0-9]*\"/mac_address: \"${full_mac}\"/g" "docker compose.yml"
     
     # Update DEVICE_MAC environment variable
-    sed -i "/${service_name}:/,/command:/ s/DEVICE_MAC=.*XX:XX:[0-9][0-9]*/DEVICE_MAC=${full_mac}/g" "docker-compose.yml"
+    sed -i "/${service_name}:/,/command:/ s/DEVICE_MAC=.*XX:XX:[0-9][0-9]*/DEVICE_MAC=${full_mac}/g" "docker compose.yml"
 done < $MAC_FILE
 
 echo "✓ Docker Compose file updated with unique MAC addresses"

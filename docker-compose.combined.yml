@@ -1,0 +1,75 @@
+version: '3.8'
+
+# Combined Docker Compose - Runs both IoT and User traffic generators
+# Usage: docker compose -f docker compose.combined.yml up
+
+services:
+  # IoT Devices
+  smart-camera-01:
+    build: common
+    container_name: iot-camera-01
+    hostname: HIK-Camera-01
+    networks:
+      sec_net:
+        mac_address: "00:11:32:db:87:8f"
+    environment:
+      - DEVICE_TYPE=camera
+      - DEVICE_MODEL=HIK-DS2CD2042WD
+      - DEVICE_MAC=00:11:32:db:87:8f
+    volumes:
+      - ./iot/scripts:/app/scripts
+    command: ["/app/scripts/camera_traffic.sh"]
+
+  smart-thermostat-01:
+    build: common
+    container_name: iot-thermostat-01
+    hostname: Nest-Thermostat-01
+    networks:
+      sec_net:
+        mac_address: "18:B4:30:a3:2a:ff"
+    environment:
+      - DEVICE_TYPE=thermostat
+      - DEVICE_MODEL=Nest-Learning-T3
+      - DEVICE_MAC=18:B4:30:a3:2a:ff
+    volumes:
+      - ./iot/scripts:/app/scripts
+    command: ["/app/scripts/thermostat_traffic.sh"]
+
+  smart-plug-01:
+    build: common
+    container_name: iot-plug-01
+    hostname: TPLink-Plug-01
+    networks:
+      sec_net:
+        mac_address: "50:C7:BF:2a:36:09"
+    environment:
+      - DEVICE_TYPE=smart_plug
+      - DEVICE_MODEL=TP-Link-HS100
+      - DEVICE_MAC=50:C7:BF:2a:36:09
+    volumes:
+      - ./iot/scripts:/app/scripts
+    command: ["/app/scripts/smart_plug_traffic.sh"]
+
+  # User Devices (Test User Only)
+  user-test:
+    build: common
+    container_name: user-test
+    hostname: user-test-laptop
+    networks:
+      sec_net:
+        mac_address: "00:1B:44:11:3A:B7"
+    environment:
+      - USER_TYPE=test_user
+      - USER_ID=testuser
+      - USER_NAME=Test User
+      - DEPARTMENT=Testing
+      - FIREWALL_HOST=${FIREWALL_HOST:-192.168.1.1}
+      - FIREWALL_API_KEY=${FIREWALL_API_KEY}
+      - DEVICE_MAC=00:1B:44:11:3A:B7
+    volumes:
+      - ./user/scripts:/app/scripts
+    command: ["/app/scripts/test_user_traffic.sh"]
+
+networks:
+  sec_net:
+    external: true 

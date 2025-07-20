@@ -1,0 +1,15 @@
+# User Profiles for Traffic Generation
+# Format: UserType:UserID:Name:Department:MAC:Description
+
+remote_worker:john.doe.remote:John Doe:Engineering:00:1B:44:11:3A:B7:Heavy web usage, video calls, cloud services
+student:alice.smith.student:Alice Smith:Student:00:1C:25:33:4B:C8:Streaming, social media, research, file downloads
+business:bob.johnson.business:Bob Johnson:Sales:00:1D:72:44:5C:D9:Email, CRM, document sharing, light web browsing
+gamer:mike.wilson.gamer:Mike Wilson:Personal:00:1E:58:55:6D:EA:Gaming traffic, updates, voice chat, streaming
+family:family.tablet.shared:Family Tablet:Personal:00:1F:A4:66:7E:FB:Mixed usage, kids content, social media, shopping
+
+# Traffic Patterns by User Type:
+# remote_worker: High bandwidth, video conferencing, cloud storage sync, VPN usage
+# student: Streaming services, social media, file downloads, research databases
+# business: Email, CRM/ERP systems, document collaboration, scheduled backups
+# gamer: Game servers, voice chat, streaming platforms, large downloads
+# family: Content streaming, social media, shopping, educational content 
