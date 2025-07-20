@@ -14,10 +14,9 @@ sleep 15
 MY_IP=$(hostname -i | awk '{print $1}')
 echo "Family Device IP: ${MY_IP}"
 
-register_user_with_firewall "$USER_ID" "$USER_NAME" "$MY_IP" "$DEPARTMENT" "$DEVICE_MAC"
 register_ip_user_mapping "$USER_ID" "$MY_IP"
 
-trap 'cleanup_user_registration "$USER_ID"' EXIT
+trap 'cleanup_user_registration "$USER_ID" "$MY_IP"' EXIT
 
 # Family streaming
 simulate_family_streaming() {

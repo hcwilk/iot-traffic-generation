@@ -50,25 +50,63 @@ services:
       - ./iot/scripts:/app/scripts
     command: ["/app/scripts/smart_plug_traffic.sh"]
 
-  # User Devices (Test User Only)
-  user-test:
+  # User Devices
+  user-sarah-martinez:
     build: common
-    container_name: user-test
-    hostname: user-test-laptop
+    container_name: user-sarah-martinez
+    hostname: sarah-martinez-laptop
     networks:
       sec_net:
         mac_address: "00:1B:44:11:3A:B7"
     environment:
-      - USER_TYPE=test_user
-      - USER_ID=testuser
-      - USER_NAME=Test User
-      - DEPARTMENT=Testing
+      - USER_TYPE=remote_worker
+      - USER_ID=sarah.martinez
+      - USER_NAME=Sarah Martinez
+      - DEPARTMENT=Engineering
       - FIREWALL_HOST=${FIREWALL_HOST:-192.168.1.1}
       - FIREWALL_API_KEY=${FIREWALL_API_KEY}
       - DEVICE_MAC=00:1B:44:11:3A:B7
     volumes:
       - ./user/scripts:/app/scripts
-    command: ["/app/scripts/test_user_traffic.sh"]
+    command: ["/app/scripts/remote_worker_traffic.sh"]
+
+  user-alex-chen:
+    build: common
+    container_name: user-alex-chen
+    hostname: alex-chen-gaming-pc
+    networks:
+      sec_net:
+        mac_address: "00:1E:58:55:6D:EA"
+    environment:
+      - USER_TYPE=gamer
+      - USER_ID=alex.chen
+      - USER_NAME=Alex Chen
+      - DEPARTMENT=Personal
+      - FIREWALL_HOST=${FIREWALL_HOST:-192.168.1.1}
+      - FIREWALL_API_KEY=${FIREWALL_API_KEY}
+      - DEVICE_MAC=00:1E:58:55:6D:EA
+    volumes:
+      - ./user/scripts:/app/scripts
+    command: ["/app/scripts/gamer_traffic.sh"]
+
+  user-emma-davis:
+    build: common
+    container_name: user-emma-davis
+    hostname: emma-davis-macbook
+    networks:
+      sec_net:
+        mac_address: "00:1F:A4:66:7E:FB"
+    environment:
+      - USER_TYPE=marketing
+      - USER_ID=emma.davis
+      - USER_NAME=Emma Davis
+      - DEPARTMENT=Marketing
+      - FIREWALL_HOST=${FIREWALL_HOST:-192.168.1.1}
+      - FIREWALL_API_KEY=${FIREWALL_API_KEY}
+      - DEVICE_MAC=00:1F:A4:66:7E:FB
+    volumes:
+      - ./user/scripts:/app/scripts
+    command: ["/app/scripts/marketing_user_traffic.sh"]
 
 networks:
   sec_net:

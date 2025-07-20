@@ -1,25 +1,125 @@
 version: '3.8'
 
 services:
-  # Test User - Single user for testing User-ID mapping
-  user-test:
+  # Remote Worker - Heavy web/video usage
+  user-sarah-martinez:
     build: ../common
-    container_name: user-test
-    hostname: user-test-laptop
+    container_name: user-sarah-martinez
+    hostname: sarah-martinez-laptop
     networks:
       sec_net:
         mac_address: "00:1B:44:11:3A:B7"
     environment:
-      - USER_TYPE=test_user
-      - USER_ID=testuser
-      - USER_NAME=Test User
-      - DEPARTMENT=Testing
+      - USER_TYPE=remote_worker
+      - USER_ID=sarah.martinez
+      - USER_NAME=Sarah Martinez
+      - DEPARTMENT=Engineering
       - FIREWALL_HOST=${FIREWALL_HOST:-192.168.1.1}
       - FIREWALL_API_KEY=${FIREWALL_API_KEY}
       - DEVICE_MAC=00:1B:44:11:3A:B7
     volumes:
       - ./scripts:/app/scripts
-    command: ["/app/scripts/test_user_traffic.sh"]
+    command: ["/app/scripts/remote_worker_traffic.sh"]
+
+  # Gaming User - High bandwidth gaming traffic
+  user-alex-chen:
+    build: ../common
+    container_name: user-alex-chen
+    hostname: alex-chen-gaming-pc
+    networks:
+      sec_net:
+        mac_address: "00:1E:58:55:6D:EA"
+    environment:
+      - USER_TYPE=gamer
+      - USER_ID=alex.chen
+      - USER_NAME=Alex Chen
+      - DEPARTMENT=Personal
+      - FIREWALL_HOST=${FIREWALL_HOST:-192.168.1.1}
+      - FIREWALL_API_KEY=${FIREWALL_API_KEY}
+      - DEVICE_MAC=00:1E:58:55:6D:EA
+    volumes:
+      - ./scripts:/app/scripts
+    command: ["/app/scripts/gamer_traffic.sh"]
+
+  # Student - Mixed usage with streaming
+  user-jordan-taylor:
+    build: ../common
+    container_name: user-jordan-taylor
+    hostname: jordan-taylor-laptop
+    networks:
+      sec_net:
+        mac_address: "00:1C:25:33:4B:C8"
+    environment:
+      - USER_TYPE=student
+      - USER_ID=jordan.taylor
+      - USER_NAME=Jordan Taylor
+      - DEPARTMENT=Student
+      - FIREWALL_HOST=${FIREWALL_HOST:-192.168.1.1}
+      - FIREWALL_API_KEY=${FIREWALL_API_KEY}
+      - DEVICE_MAC=00:1C:25:33:4B:C8
+    volumes:
+      - ./scripts:/app/scripts
+    command: ["/app/scripts/student_traffic.sh"]
+
+  # Business User - Standard office traffic
+  user-michael-johnson:
+    build: ../common
+    container_name: user-michael-johnson
+    hostname: michael-johnson-desktop
+    networks:
+      sec_net:
+        mac_address: "00:1D:72:44:5C:D9"
+    environment:
+      - USER_TYPE=business
+      - USER_ID=michael.johnson
+      - USER_NAME=Michael Johnson
+      - DEPARTMENT=Sales
+      - FIREWALL_HOST=${FIREWALL_HOST:-192.168.1.1}
+      - FIREWALL_API_KEY=${FIREWALL_API_KEY}
+      - DEVICE_MAC=00:1D:72:44:5C:D9
+    volumes:
+      - ./scripts:/app/scripts
+    command: ["/app/scripts/business_user_traffic.sh"]
+
+  # Marketing User - Social media focused
+  user-emma-davis:
+    build: ../common
+    container_name: user-emma-davis
+    hostname: emma-davis-macbook
+    networks:
+      sec_net:
+        mac_address: "00:1F:A4:66:7E:FB"
+    environment:
+      - USER_TYPE=marketing
+      - USER_ID=emma.davis
+      - USER_NAME=Emma Davis
+      - DEPARTMENT=Marketing
+      - FIREWALL_HOST=${FIREWALL_HOST:-192.168.1.1}
+      - FIREWALL_API_KEY=${FIREWALL_API_KEY}
+      - DEVICE_MAC=00:1F:A4:66:7E:FB
+    volumes:
+      - ./scripts:/app/scripts
+    command: ["/app/scripts/marketing_user_traffic.sh"]
+
+  # Designer - Creative tools and portfolio sites
+  user-ryan-wu:
+    build: ../common
+    container_name: user-ryan-wu
+    hostname: ryan-wu-imac
+    networks:
+      sec_net:
+        mac_address: "00:2A:95:77:8F:1C"
+    environment:
+      - USER_TYPE=designer
+      - USER_ID=ryan.wu
+      - USER_NAME=Ryan Wu
+      - DEPARTMENT=Design
+      - FIREWALL_HOST=${FIREWALL_HOST:-192.168.1.1}
+      - FIREWALL_API_KEY=${FIREWALL_API_KEY}
+      - DEVICE_MAC=00:2A:95:77:8F:1C
+    volumes:
+      - ./scripts:/app/scripts
+    command: ["/app/scripts/designer_traffic.sh"]
 
 networks:
   sec_net:
